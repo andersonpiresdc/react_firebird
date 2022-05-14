@@ -1,9 +1,11 @@
+import React from 'react';
+import { useState, useEffect, Component } from 'react';
 import firebase from './firebaseConnection';
-import { useState, useEffect } from 'react';
 import './style.css';
+import Titulo from './components/Titulo';
 
 function App() {
-   const [id, setIdPost] = useState('');
+   const [idPost, setIdPost] = useState('');
    const [titulo, setTitulo] = useState('');
    const [autor, setAutor] = useState('');
    const [posts, setPosts] = useState([]);
@@ -47,7 +49,7 @@ function App() {
 
    async function buscarPost(){
        await firebase.firestore().collection('posts')
-       .doc(id)
+       .doc(idPost)
        .get()
        .then((snapshot)=>{
           setTitulo(snapshot.data().titulo);
@@ -56,27 +58,11 @@ function App() {
        .catch((error) => {
           console.log("Deu algum erro!");
        })
-/*      await firebase.firestore().collection('posts')
-      .get()
-      .then((snapshot)=>{
-         let lista = [];
-         snapshot.forEach((doc)=>{
-            lista.push({
-               id: doc.id,
-               titulo: doc.data().titulo,
-               autor: doc.data().autor
-            })
-         setPosts(lista);
-         })
-      })
-      .catch((error)=>{
-         console.log("Deu algum erro ao carregar os Posts")
-      })*/
    }
 
    async function editarPost(){
       await firebase.firestore().collection('posts')
-      .doc(id)
+      .doc(idPost)
       .update({
          titulo: titulo,
          autor: autor
@@ -91,7 +77,7 @@ function App() {
 
    async function excluirPost(){
       await firebase.firestore().collection('posts')
-      .doc(id)
+      .doc(idPost)
       .delete()
       .then(() => {
          setIdPost('');
@@ -104,11 +90,21 @@ function App() {
       })
    }
 
+   async function excluirItem(id){
+      await firebase.firestore().collection('posts')
+      .doc(id)
+      .delete()
+      .catch(() => {
+         alert("Não pode excluir o item!")
+      })
+   }
+
    return (
       <div className="container">
-         <h1>ReactJS + Firebase</h1><br/>
+         {/* <h1><RiReactjsLine className="logoReact"/>ReactJS + <SiFirebase className='logoFirebase'/>Firebase</h1><br/> */}
+         <Titulo titulo1="React" titulo2="Firebase"/>
          <label>Id:</label>
-         <input type="text" value={id} onChange={(e) => setIdPost(e.target.value)}/>
+         <input type="text" value={idPost} onChange={(e) => setIdPost(e.target.value)}/>
          <label>Titulo:</label>
          <textarea type="text" value={titulo} onChange={ (e) => setTitulo(e.target.value)}/>
          <label>Autor:</label>
@@ -122,9 +118,12 @@ function App() {
             {posts.map((post)=>{
                return(
                   <li key={post.id}>
+                     <div>
                      <span>id: {post.id}</span><br/>
                      <span>Titulo: {post.titulo}</span><br/>
-                     <span>Autor: {post.autor}</span><br/><br/>
+                     <span>Autor: {post.autor}</span><br/>
+                     </div>
+                     <ion-icon name="trash-outline" onClick={() => excluirItem(post.id)}></ion-icon>
                   </li>
                )
             })}
