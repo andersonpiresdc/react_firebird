@@ -2,7 +2,7 @@ h1{
    width: 100%;
    background-color: brown;
    color: #FFF;
-   padding: 0;
+   text-shadow: 3px 3px 10px #000;
    margin-top: 0px;
    display: flex;
    align-items: center;

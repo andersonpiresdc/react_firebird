@@ -56,7 +56,7 @@ function App() {
           setAutor(snapshot.data().autor);
        })
        .catch((error) => {
-          console.log("Deu algum erro!");
+          console.log("Deu algum erro! "+error);
        })
    }
 
@@ -72,7 +72,7 @@ function App() {
          setTitulo('');
          setAutor('');
       })
-      .catch(() => {alert("Erro ao efetuar a edição do post!")})
+      .catch((error) => {alert("Erro ao efetuar a edição do post! "+error)})
    }
 
    async function excluirPost(){
@@ -85,8 +85,8 @@ function App() {
          setAutor('');
          alert("Excluido com sucesso!");
       })
-      .catch(() => {
-         alert("Erro ao tentar excluir o post!");
+      .catch((error) => {
+         alert("Erro ao tentar excluir o post! "+error);
       })
    }
 
@@ -94,42 +94,78 @@ function App() {
       await firebase.firestore().collection('posts')
       .doc(id)
       .delete()
-      .catch(() => {
-         alert("Não pode excluir o item!")
+      .catch((error) => {
+         alert("Não pode excluir o item! "+error)
+      })
+   }
+
+   async function editItem(id){
+      await firebase.firestore().collection('posts')
+      .doc(id)
+      .get()
+      .then((snapshot) => {
+         setIdPost(snapshot.data().id);
+         setTitulo(snapshot.data().titulo);
+         setAutor(snapshot.data().autor);
+      })
+      .catch((error) => {
+         alert('Erro ocorrido ao tentar editar o post: '+id+' Error: '+error);
       })
    }
 
    return (
-      <div className="container">
-         {/* <h1><RiReactjsLine className="logoReact"/>ReactJS + <SiFirebase className='logoFirebase'/>Firebase</h1><br/> */}
+      <div className="container_principal">
          <Titulo titulo1="React" titulo2="Firebase"/>
-         <label>Id:</label>
-         <input type="text" value={idPost} onChange={(e) => setIdPost(e.target.value)}/>
-         <label>Titulo:</label>
-         <textarea type="text" value={titulo} onChange={ (e) => setTitulo(e.target.value)}/>
-         <label>Autor:</label>
-         <textarea type="text" value={autor} onChange={ (e) => setAutor(e.target.value)}/>
-         <button onClick={handleAdd}>Cadastrar</button><br/>
-         <button onClick={buscarPost}>Buscar Post</button><br/>
-         <button onClick={editarPost}>Editar Post</button><br/>
-         <button onClick={excluirPost}>Excluir Post</button><br/>
+         <div className="container">
+            <div className='campos'>
+               <input placeholder="id" type="text" value={idPost} onChange={(e) => setIdPost(e.target.value)}/>
+               <textarea placeholder="Titulo" type="text" value={titulo} onChange={ (e) => setTitulo(e.target.value)}/>
+               <textarea placeholder='Autor' type="text" value={autor} onChange={ (e) => setAutor(e.target.value)}/>
+            </div>
 
-         <ul>
-            {posts.map((post)=>{
-               return(
-                  <li key={post.id}>
-                     <div>
-                     <span>id: {post.id}</span><br/>
-                     <span>Titulo: {post.titulo}</span><br/>
-                     <span>Autor: {post.autor}</span><br/>
-                     </div>
-                     <ion-icon name="trash-outline" onClick={() => excluirItem(post.id)}></ion-icon>
-                  </li>
-               )
-            })}
-         </ul>
+            <div className='botoes'>
+               <button onClick={handleAdd}>Cadastrar</button><br/>
+               <button onClick={buscarPost}>Buscar</button><br/>
+               {/* <button onClick={editarPost}>Editar Post</button><br/> */}
+               {/* <button onClick={excluirPost}>Excluir Post</button><br/> */}
+            </div>
 
 
+            <div className="container_posts">
+               <ul>
+                  {posts.map((post)=>{
+                     return(
+                        <li key={post.id}>
+                           <div>
+                           <span>
+                              <strong className="span_id">
+                                 ID: 
+                              </strong>
+                              {post.id}
+                           </span><br/>
+                           <span>
+                              <strong className="span_id">
+                              Titulo: 
+                              </strong>
+                              {post.titulo}
+                           </span><br/>
+                           <span>
+                              <strong className="span_id">
+                              Autor: 
+                              </strong>
+                              {post.autor}
+                           </span><br/>
+                           </div>
+                           <div>
+                              <ion-icon name="create-outline" onClick={() => editItem(post.id)}></ion-icon>
+                              <ion-icon name="trash-outline" onClick={() => excluirItem(post.id)}></ion-icon>
+                           </div>
+                        </li>
+                     )
+                  })}
+               </ul>
+            </div>
+         </div>
       </div>
    );
 }

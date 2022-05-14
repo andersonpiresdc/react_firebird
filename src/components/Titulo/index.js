@@ -5,7 +5,10 @@ import { SiFirebase } from 'react-icons/si';
 
 function Titulo(props) {
       return(
-         <h1><RiReactjsLine className="logoReact"/>{props.titulo1}<SiFirebase className='logoFirebase'/>{props.titulo2}</h1>   
+         <h1>
+            <RiReactjsLine className="logoReact"/>{props.titulo1}
+            <SiFirebase className='logoFirebase'/>{props.titulo2}
+         </h1>   
       )
    }
 

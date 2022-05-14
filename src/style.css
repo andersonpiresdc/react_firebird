@@ -1,33 +1,49 @@
-.container{
+.container_principal{
+   background-color: gray;
+   border-radius: 10px;
    width: 100%;
+   height: 600px;
+   margin: auto;
+}
+
+.container{
+   background-color: darkgray;
+   padding: 0;
+   width: 90%;
+   height: 81%;
    display: flex;
    flex-direction: column;
+   justify-content: center;
+   margin: auto;
+   border-radius: 5px;
+   box-shadow: 5px 5px 10px;
+}
+
+.container_posts{
+   margin-top: -10px;
+   margin-right: 5px;
+   height: 220px;
+   overflow: hidden;
+}
+
+.container_posts::-webkit-scrollbar-track{
+   background: darkgray;
    border-radius: 10px;
+}
+
+.container_posts::-webkit-scrollbar {
+   width: 10px;
+   background: #F4F4F4;
+   border-radius: 10px;
+}
+.container_posts::-webkit-scrollbar-thumb {
    background-color: gray;
-   align-items: center;
+   border-radius: 10px;
 }
 
-.logoReact{
-   font-size: 30px;
-   padding: 0;
-}
-
-.logoFirebase{
-   font-size: 30px;
-   padding: 0;
-}
-
-input{
-  width: 50%; 
-}
-
-textarea{
-   width: 50%;
-}
-
-button{
-   width: 50%
-}
+ .container_posts:hover{
+   overflow-y: scroll;
+} 
 
 ion-icon{
    font-size: 30px;
@@ -41,7 +57,80 @@ ion-icon:hover{
 }
 
 li{
+   padding: 10px;
    display: flex;
    align-items: center;
+   justify-content: space-between;
+   /* margin: auto; */
+   margin-bottom: 20px;
+   box-shadow: #000 5px 5px 10px;
+   width: 92%;
+   border-radius: 8px;
+}
+
+.span_id{
+   font-weight: bold;
+   font-size: 14px;
+   font-family: sans-serif;
+}
+
+input{
+   width: 87%;
+   background-color: rgb(190, 190, 190);
+   border-bottom-width: 3px;
+   border-color: #000;
+   border-top: none;
+   border-left: none;
+   border-right: none;
+   padding: 5px;
+   margin-bottom: 8px;
+   outline: none;
+}
+
+textarea{
+   width: 87%;
+   background-color: rgb(190, 190, 190);
+   border-bottom-width: 2px;
+   border-color: #000;
+   border-top: none;
+   border-left: none;
+   border-right: none;
+   padding: 5px;
+   margin-bottom: 8px;
+   outline: none;
+   resize: none;
+   overflow: auto;
+}
+
+.campos{
+   display: flex;
+   flex-direction: column;
    justify-content: center;
+   align-items: center;
+}
+
+.botoes{
+   width: 88.9%;
+   display: flex;
+   /* background-color: #F4F4F4; */
+   flex-direction: row;
+   justify-content: space-between;
+   /* align-items: center; */
+   margin: auto;
+   margin-top: 0;
+   margin-bottom: 15px;
+   
+}
+
+.botoes button{
+   background-color: brown;
+   color: #F4F4F4;
+   font-size: 25px;
+   font-family: sans-serif;
+   font-weight: bold;
+   border: none;
+   width: 30%;
+   margin: auto;
+   border-radius: 5px;
+   /* box-shadow: #000 5px 5px 10px; */
 }
